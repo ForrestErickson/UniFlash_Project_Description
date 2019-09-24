@@ -1,7 +1,8 @@
 /* ListingFiles
  *
- * From: https://processing.org/examples/directorylist.html
- *
+ * Mutated from: https://processing.org/examples/directorylist.html
+ * Author: (Forrest) Lee Erickson
+ * Date: 20190924
  */
   
  import java.util.Date;
@@ -19,23 +20,24 @@ void setup() {
   // but you can list any directory you like.
   String path = "C:\\Users\\Lee\\.SLImageCreator\\projects";
 
-  println("Listing all filenames in a directory: ");
-  String[] filenames = listFileNames(path);
+  //println("Listing all filenames in a directory: ");
+  //String[] filenames = listFileNames(path);
   //printArray(filenames);
 
-  println("\nListing info about all files in a directory: ");
-  File[] files = listFiles(path);
-  for (int i = 0; i < files.length; i++) {
-    File f = files[i];    
-    println("Name: " + f.getName());
-    println("Is directory: " + f.isDirectory());
-    println("Size: " + f.length());
-    String lastModified = new Date(f.lastModified()).toString();
-    println("Last Modified: " + lastModified);
-    println("-----------------------");
-  }
+  //println("\nListing info about all files in a directory: ");
+  //File[] files = listFiles(path);
+  //for (int i = 0; i < files.length; i++) {
+  //  File f = files[i];    
+  //  println("Name: " + f.getName());
+  //  println("Is directory: " + f.isDirectory());
+  //  println("Size: " + f.length());
+  //  String lastModified = new Date(f.lastModified()).toString();
+  //  println("Last Modified: " + lastModified);
+  //  println("-----------------------");
+  //}
 
-  println("\nListing info about all '.json' files in a directory and all subdirectories: ");
+//  println("\nListing info about all '.json' files in a directory and all subdirectories in path: "+ path+"\n\r");
+  println("### UniFlash project and Project Descriptions in path: "+ path+" ###\n\r");
   ArrayList<File> allFiles = listFilesRecursive(path);
   int fileNum = 0;
   int jsonNum = 0;
@@ -43,16 +45,14 @@ void setup() {
   for (File f : allFiles) {    
     String[] m1 = match(f.getName(), ".json");
     if (m1 != null ) { 
-      println("Name: " + f.getName());
-      println("Full path: " + f.getAbsolutePath());
+//      println("Name: " + f.getName());
+//      println("Full path: " + f.getAbsolutePath());
       //println("Is directory: " + f.isDirectory());
       //println("Size: " + f.length());
-      String lastModified = new Date(f.lastModified()).toString();
-      println("Last Modified: " + lastModified);
-      println("-----------------------");
-      
+//      String lastModified = new Date(f.lastModified()).toString();
+//      println("Last Modified: " + lastModified);
       printDescription (f.getAbsolutePath(), f.getName());
-      
+      println("-----------------------\n\r");          
       jsonNum++;
     }// match for json.
     fileNum++;
@@ -65,7 +65,7 @@ void setup() {
 // Simple GUI with mouse event handler
 void draw() {  
   background(myBackground);
-  text("Finding Folders and JSON file(s)",10,10);
+  text("UniFlash Projects and Descriptions",10,10);  
   text("Press Middle Mouse to Exit",10,175);
   //rect(100,100,25,25);
 }
@@ -120,7 +120,7 @@ void recurseDir(ArrayList<File> a, String dir) {
 
 /*Print UniFlash project description from JSON file.*/
 void printDescription (String path, String andfilename){
-  println("Filename: " + andfilename);
+//  println("Filename: " + andfilename);
   String[] m = match(andfilename, "recents.json");
   if ( m == null) {
       //  String myFile = path+andfilename;
@@ -139,10 +139,8 @@ void printDescription (String path, String andfilename){
     println("Project: "+ andfilename + "\n\rDescription contains: " + myDescription);    
     }
    else {
-     println("Got the project list."); 
-   }
-   
-   
+     println("Got the project list. Not a proper JSON file."); 
+   }      
 }//Function printDescription
 
 
