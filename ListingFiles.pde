@@ -3,21 +3,25 @@
  * From: https://processing.org/examples/directorylist.html
  *
  */
- 
- 
+  
  import java.util.Date;
+ color myBackground = color(0,255,0);
 
 void setup() {
-
+  size(200, 200);
+  background(myBackground);
+  stroke(255,0,0);
+  fill(0);
+    
   // Using just the path of this sketch to demonstrate,
-  // but you can list any directory you like.
-
   //String path = sketchPath();
+  
+  // but you can list any directory you like.
   String path = "C:\\Users\\Lee\\.SLImageCreator\\projects";
 
   println("Listing all filenames in a directory: ");
   String[] filenames = listFileNames(path);
-  printArray(filenames);
+  //printArray(filenames);
 
   println("\nListing info about all files in a directory: ");
   File[] files = listFiles(path);
@@ -31,7 +35,7 @@ void setup() {
     println("-----------------------");
   }
 
-  println("\nListing info about all files in a directory and all subdirectories: ");
+  println("\nListing info about all '.json' files in a directory and all subdirectories: ");
   ArrayList<File> allFiles = listFilesRecursive(path);
   int fileNum = 0;
   int jsonNum = 0;
@@ -39,29 +43,28 @@ void setup() {
   for (File f : allFiles) {    
     String[] m1 = match(f.getName(), ".json");
     if (m1 != null ) { 
-    println("Name: " + f.getName());
-    println("Full path: " + f.getAbsolutePath());
-    println("Is directory: " + f.isDirectory());
-    println("Size: " + f.length());
-    String lastModified = new Date(f.lastModified()).toString();
-    println("Last Modified: " + lastModified);
-    println("-----------------------");
-    jsonNum++;
+      println("Name: " + f.getName());
+      println("Full path: " + f.getAbsolutePath());
+      //println("Is directory: " + f.isDirectory());
+      //println("Size: " + f.length());
+      String lastModified = new Date(f.lastModified()).toString();
+      println("Last Modified: " + lastModified);
+      println("-----------------------");
+      jsonNum++;
     }// match for json.
-    
-    
     fileNum++;
   }
 //  println("Total Files: " + allFiles );
-  println("Total JSON Files: " + jsonNum);
   println("Total Files: " + fileNum);
-
-  noLoop();
+  println("Total JSON Files: " + jsonNum);
 }
 
-// Nothing is drawn in this program and the draw() doesn't loop because
-// of the noLoop() in setup()
-void draw() {
+// Simple GUI with mouse event handler
+void draw() {  
+  background(myBackground);
+  text("Finding Folders and JSON file(s)",10,10);
+  text("Press Middle Mouse to Exit",10,175);
+  //rect(100,100,25,25);
 }
 
 // This function returns all the files in a directory as an array of Strings  
@@ -109,5 +112,25 @@ void recurseDir(ArrayList<File> a, String dir) {
     }
   } else {
     a.add(file);
+  }
+}
+
+/*Event handlers */
+void mousePressed() {
+  if (mouseButton == LEFT) {
+    myBackground = 255;
+    /*Give user feedback */
+    println("Left was pressed.");
+ 
+} else if (mouseButton == RIGHT) {
+    myBackground = 128;
+   /*Give user feedback */
+    println("Right was pressed.");
+ 
+} else {  //Middle button exits.
+    myBackground = 255;
+    println("Exiting now.");
+    delay(1000);
+    exit();
   }
 }
