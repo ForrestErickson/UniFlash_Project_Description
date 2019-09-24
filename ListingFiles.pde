@@ -50,6 +50,9 @@ void setup() {
       String lastModified = new Date(f.lastModified()).toString();
       println("Last Modified: " + lastModified);
       println("-----------------------");
+      
+      printDescription (f.getAbsolutePath(), f.getName());
+      
       jsonNum++;
     }// match for json.
     fileNum++;
@@ -114,6 +117,34 @@ void recurseDir(ArrayList<File> a, String dir) {
     a.add(file);
   }
 }
+
+/*Print UniFlash project description from JSON file.*/
+void printDescription (String path, String andfilename){
+  println("Filename: " + andfilename);
+  String[] m = match(andfilename, "recents.json");
+  if ( m == null) {
+      //  String myFile = path+andfilename;
+    String myFile = path;
+   /* Get list of project from recent file */
+  //  println("MyFile is: " + myFile);
+    JSONObject json = loadJSONObject(myFile);
+  //  println("File contains: " + json);
+  
+    /*Lets print just the project Header */
+    JSONObject myHeader = json.getJSONObject("header");
+  //  println("Header contains: " + myHeader);
+  
+    /*Lets print just the project Description */
+    String myDescription = myHeader.getString("Description");
+    println("Project: "+ andfilename + "\n\rDescription contains: " + myDescription);    
+    }
+   else {
+     println("Got the project list."); 
+   }
+   
+   
+}//Function printDescription
+
 
 /*Event handlers */
 void mousePressed() {
