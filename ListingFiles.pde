@@ -34,8 +34,11 @@ void setup() {
   println("\nListing info about all files in a directory and all subdirectories: ");
   ArrayList<File> allFiles = listFilesRecursive(path);
   int fileNum = 0;
+  int jsonNum = 0;
 
-  for (File f : allFiles) {
+  for (File f : allFiles) {    
+    String[] m1 = match(f.getName(), ".json");
+    if (m1 != null ) { 
     println("Name: " + f.getName());
     println("Full path: " + f.getAbsolutePath());
     println("Is directory: " + f.isDirectory());
@@ -43,9 +46,14 @@ void setup() {
     String lastModified = new Date(f.lastModified()).toString();
     println("Last Modified: " + lastModified);
     println("-----------------------");
+    jsonNum++;
+    }// match for json.
+    
+    
     fileNum++;
   }
 //  println("Total Files: " + allFiles );
+  println("Total JSON Files: " + jsonNum);
   println("Total Files: " + fileNum);
 
   noLoop();
